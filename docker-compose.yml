@@ -1,0 +1,17 @@
+# docker-compose.yml
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-telegram-alerts
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: telegram_alerts
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    ports:
+      - "3307:3306"
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    volumes:
+      - dbdata:/var/lib/mysql
+volumes:
+  dbdata:

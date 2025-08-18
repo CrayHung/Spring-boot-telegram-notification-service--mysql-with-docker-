@@ -1,0 +1,41 @@
+# application.yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/telegram_alerts?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Taipei
+    username: ${DB_USER:appuser}
+    password: ${DB_PASS:apppass}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+telegram:
+  bot-token: ${TELEGRAM_BOT_TOKEN:8469015447:AAHUjUbyUefIG49PGbiHxf7X5RNGJ6KCXPw}
+  chat-ids: ${TELEGRAM_CHAT_IDS:-4887343110}
+
+security:
+  api-key: ${ALERTS_API_KEY:change-me}
+
+
+
+
+# spring:
+#   datasource:
+#     url: jdbc:mysql://localhost:3307/telegram_alerts?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Taipei
+#     username: ${DB_USER}
+#     password: ${DB_PASS}
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     properties:
+#       hibernate:
+#         dialect: org.hibernate.dialect.MySQL8Dialect
+
+# telegram:
+#   bot-token: ${TELEGRAM_BOT_TOKEN:8469015447:AAHUjUbyUefIG49PGbiHxf7X5RNGJ6KCXPw}
+#   chat-ids: ${TELEGRAM_CHAT_IDS:-4887343110}
+
+# security:
+#   api-key: ${ALERTS_API_KEY:change-me}
