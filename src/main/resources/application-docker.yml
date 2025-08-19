@@ -23,11 +23,11 @@ management:
 
 telegram:
   bot-token: ${TELEGRAM_BOT_TOKEN}
-  chat-ids: ${TELEGRAM_CHAT_IDS:- -1001234567890}
+  chat-ids: ${TELEGRAM_CHAT_IDS:--4887343110}
   parse-mode: HTML
   disable-web-page-preview: true
   disable-notification: false
   api-url: https://api.telegram.org
 
 security:
-  api-key: ${ALERTS_API_KEY:change-me}
+  api-key: ${ALERTS_API_KEY:alert-key}

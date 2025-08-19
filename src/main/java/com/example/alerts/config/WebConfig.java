@@ -17,7 +17,7 @@ public class WebConfig {
   // 用方法參數注入，並給預設值，避免屬性讀不到就炸掉
   @Bean
   public FilterRegistrationBean<ApiKeyAuthFilter> apiKeyAuthFilter(
-      @Value("${security.api-key:change-me}") String apiKey) {
+      @Value("${security.api-key:alert-key}") String apiKey) {
 
     FilterRegistrationBean<ApiKeyAuthFilter> reg = new FilterRegistrationBean<>();
     reg.setFilter(new ApiKeyAuthFilter(apiKey));

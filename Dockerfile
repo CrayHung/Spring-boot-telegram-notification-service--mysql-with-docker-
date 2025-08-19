@@ -1,23 +1,14 @@
-# -------- Build stage --------
-FROM eclipse-temurin:17-jdk AS build
-WORKDIR /app
-COPY gradlew ./
-COPY gradle gradle
-COPY build.gradle settings.gradle ./
-COPY src src
-# 先拉依賴避免每次全量重建
-RUN ./gradlew --no-daemon clean bootJar
+# ===== Stage 1: Build =====
+FROM gradle:8.8-jdk17 AS builder
+WORKDIR /home/gradle/src
+COPY . .
+RUN gradle clean bootJar -x test
 
-# -------- Run stage --------
+# ===== Stage 2: Runtime =====
 FROM eclipse-temurin:17-jre
+ENV TZ=Asia/Taipei \
+    JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
 WORKDIR /app
-# 把 jar 複製過來
-COPY --from=build /app/build/libs/*-SNAPSHOT.jar /app/app.jar
-# 健康檢查（等會兒 compose 會用）
-HEALTHCHECK --interval=30s --timeout=10s --retries=5 \
-  CMD curl -fs http://localhost:8080/actuator/health || exit 1
-# 服務埠
+COPY --from=builder /home/gradle/src/build/libs/*-SNAPSHOT.jar /app/app.jar
 EXPOSE 8080
-# 可選 JVM 參數
-ENV JAVA_OPTS="-Xms256m -Xmx512m"
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar /app/app.jar"]
